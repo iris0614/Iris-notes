@@ -1,10 +1,10 @@
 ---
-title: "[Iris-notes](https://iris0614.github.io/IrisLuo/)"
+title: "Iris-notes"
 ---
 
 <img src="img/myicon.jpg" height="200" alt="cartoon of me" />
 
-Welcome to my collection of LeetCode notes📝! 🌟
+Hi👋, I am [Iris LUO](https://iris0614.github.io/IrisLuo/). Welcome to my collection of LeetCode notes📝! 🌟
 
 I've compiled these notes to help others on their coding journey. Most of the explanations here are based on the concepts and materials from the UBC Master of Data Science (MDS)course. For any additional references or specific problem explanations, I'll be sharing links throughout. Whether you're a beginner or just looking for a quick refresher, I hope you find these notes both useful and enjoyable!
 <img src="img/mds_logo.png" height="180" alt="ubc logo" />
