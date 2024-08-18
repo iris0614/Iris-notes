@@ -1,0 +1,21 @@
+---
+title: "[Iris-notes](https://iris0614.github.io/IrisLuo/)"
+---
+
+<img src="img/myicon.jpg" height="200" alt="cartoon of me" />
+
+Welcome to my collection of LeetCode notes📝! 🌟
+
+I've compiled these notes to help others on their coding journey. Most of the explanations here are based on the concepts and materials from the UBC Master of Data Science (MDS)course. For any additional references or specific problem explanations, I'll be sharing links throughout. Whether you're a beginner or just looking for a quick refresher, I hope you find these notes both useful and enjoyable!
+<img src="img/mds_logo.png" height="180" alt="ubc logo" />
+
+Key Highlights:
+
+- 🔍Deep Dives: Detailed explanations of common coding problems.
+- 💡Tips & Tricks: Handy shortcuts and insights to boost your problem-solving speed.
+- 🛠️Code Snippets: Ready-to-use code examples to help you ace your interviews.
+Feel free to explore, and happy coding! 🚀
+
+
+
+
