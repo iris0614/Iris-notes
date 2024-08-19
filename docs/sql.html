@@ -97,7 +97,35 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#relational-databases" id="toc-relational-databases" class="nav-link active" data-scroll-target="#relational-databases">Relational Databases</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#using-a-dbms-ensures" id="toc-using-a-dbms-ensures" class="nav-link" data-scroll-target="#using-a-dbms-ensures">Using a DBMS ensures:</a></li>
+  </ul></li>
+  <li><a href="#relational-data-model" id="toc-relational-data-model" class="nav-link" data-scroll-target="#relational-data-model">Relational Data Model</a></li>
+  <li><a href="#relational-database-a-collection-of-relations." id="toc-relational-database-a-collection-of-relations." class="nav-link" data-scroll-target="#relational-database-a-collection-of-relations.">Relational Database: A collection of relations.</a></li>
+  <li><a href="#query-language-in-a-dbms" id="toc-query-language-in-a-dbms" class="nav-link" data-scroll-target="#query-language-in-a-dbms">Query language in a DBMS</a></li>
+  <li><a href="#postgresql" id="toc-postgresql" class="nav-link" data-scroll-target="#postgresql">PostgreSQL</a>
+  <ul class="collapse">
+  <li><a href="#psql-postgresqls-interactive-command-line-interface" id="toc-psql-postgresqls-interactive-command-line-interface" class="nav-link" data-scroll-target="#psql-postgresqls-interactive-command-line-interface">psql: PostgreSQL’s interactive command-line interface</a></li>
+  </ul></li>
+  <li><a href="#sql-commands" id="toc-sql-commands" class="nav-link" data-scroll-target="#sql-commands">SQL commands:</a>
+  <ul class="collapse">
+  <li><a href="#the-order-of-sql-clauses" id="toc-the-order-of-sql-clauses" class="nav-link" data-scroll-target="#the-order-of-sql-clauses">The order of SQl clauses:</a></li>
+  <li><a href="#logical-operators-order" id="toc-logical-operators-order" class="nav-link" data-scroll-target="#logical-operators-order">Logical operators order:</a></li>
+  <li><a href="#data-types" id="toc-data-types" class="nav-link" data-scroll-target="#data-types">Data types:</a></li>
+  <li><a href="#nulls" id="toc-nulls" class="nav-link" data-scroll-target="#nulls"><strong>Nulls</strong></a></li>
+  <li><a href="#where" id="toc-where" class="nav-link" data-scroll-target="#where"><strong>WHERE</strong></a></li>
+  <li><a href="#like-and-ilike" id="toc-like-and-ilike" class="nav-link" data-scroll-target="#like-and-ilike"><strong>LIKE</strong> and <strong>ILIKE</strong></a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -119,9 +147,388 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>About this site</p>
+<section id="relational-databases" class="level1">
+<h1>Relational Databases</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<ul>
+<li>What is a database?
+<ul>
+<li>Organized collection of related data</li>
+</ul></li>
+<li>What is a database management system (DBMS)?
+<ul>
+<li>Collection of programs that enables users to create and maintain a database</li>
+<li>allows users to create, query, modify, and manage</li>
+</ul></li>
+</ul>
+<p><strong>DATABASE != DBMS</strong></p>
+<section id="using-a-dbms-ensures" class="level3">
+<h3 class="anchored" data-anchor-id="using-a-dbms-ensures">Using a DBMS ensures:</h3>
+<ul>
+<li><strong>Efficiency</strong>: Data is stored efficiently.</li>
+<li><strong>Integrity</strong>: Data is consistent and correct.</li>
+<li><strong>Security</strong>: Data is safe from unauthorized access.</li>
+<li><strong>Concurrent Access</strong>: Multiple users can access the same data at the same time.</li>
+<li><strong>Crash Recovery</strong>: Data is safe from crashes.</li>
+<li><strong>Independence</strong>: Data is independent of the programs that use it.</li>
+</ul>
+</section>
+</section>
+<section id="relational-data-model" class="level2">
+<h2 class="anchored" data-anchor-id="relational-data-model">Relational Data Model</h2>
+<ul>
+<li>Works with entities and relationships</li>
+<li><strong>Entity</strong>: a thing or object in the real world that is distinguishable from other objects
+<ul>
+<li>e.g.&nbsp;students in a school</li>
+</ul></li>
+<li><strong>Relationship</strong>: an association among entities
+<ul>
+<li>e.g.&nbsp;a student is enrolled in a course</li>
+</ul></li>
+</ul>
+</section>
+<section id="relational-database-a-collection-of-relations." class="level2">
+<h2 class="anchored" data-anchor-id="relational-database-a-collection-of-relations.">Relational Database: A collection of relations.</h2>
+<ul>
+<li>A <strong>relation</strong> is an instance of a relation schema (just like an object was an instance of a class!)</li>
+<li><strong>Relation Schema</strong> specifies:
+<ol type="1">
+<li>Name of a relation</li>
+<li>Name and domain of each attribute</li>
+</ol></li>
+<li><strong>Domain</strong>: A set of constraints that determines the type, length, format, range, uniqueness and nullability of values stored for an attribute.</li>
+</ul>
+<p><img src="img/1_Anatomy_of_a_table.png" width="400"></p>
+</section>
+<section id="query-language-in-a-dbms" class="level2">
+<h2 class="anchored" data-anchor-id="query-language-in-a-dbms">Query language in a DBMS</h2>
+<ul>
+<li>Query: A question that we ask about the data. The result of a query is a new relation.</li>
+<li><strong>Structured Query Language (SQL)</strong>: A programming language taht we use to talk to a relational DBMS. <strong>SQL != relational model != database != DBMS</strong> SQL is a standard language for storing, manipulating and retrieving data in databases.</li>
+<li>The data query language(DQL) is part of a bigger set of languages for working with data in a realational database, which consists of:
+<ul>
+<li><strong>Data Definition Language (DDL)</strong> for creating, altering and deleting tables.</li>
+<li><strong>Data Manipulation Language (DML)</strong> for inserting new data, updating values, etc.</li>
+<li><strong>Data Query Language (DQL)</strong> for quering and retrieving data.</li>
+<li><strong>Data Control Language (DCL)</strong> for management and controlling user access, rights and privileges.</li>
+</ul></li>
+</ul>
+</section>
+<section id="postgresql" class="level2">
+<h2 class="anchored" data-anchor-id="postgresql">PostgreSQL</h2>
+<ul>
+<li>It is an open-source, cross-platform DBMS that implements the relational model.</li>
+</ul>
+<section id="psql-postgresqls-interactive-command-line-interface" class="level3">
+<h3 class="anchored" data-anchor-id="psql-postgresqls-interactive-command-line-interface">psql: PostgreSQL’s interactive command-line interface</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>\l</code></td>
+<td>List all databases</td>
+</tr>
+<tr class="even">
+<td><code>\c</code></td>
+<td>Connect to a database</td>
+</tr>
+<tr class="odd">
+<td><code>\d</code></td>
+<td>Describe tables and views</td>
+</tr>
+<tr class="even">
+<td><code>\dt</code></td>
+<td>List tables</td>
+</tr>
+<tr class="odd">
+<td><code>\dt+</code></td>
+<td>List tables with additional info</td>
+</tr>
+<tr class="even">
+<td><code>\d+</code></td>
+<td>List tables and views with additional info</td>
+</tr>
+<tr class="odd">
+<td><code>\!</code></td>
+<td>Execute shell commands</td>
+</tr>
+<tr class="even">
+<td><code>\cd</code></td>
+<td>Change directory</td>
+</tr>
+<tr class="odd">
+<td><code>\i</code></td>
+<td>Execute commands from a file</td>
+</tr>
+<tr class="even">
+<td><code>\h</code></td>
+<td>View help on SQL commands</td>
+</tr>
+<tr class="odd">
+<td><code>\?</code></td>
+<td>View help on psql meta commands</td>
+</tr>
+<tr class="even">
+<td><code>\q</code></td>
+<td>Quit interactive shell</td>
+</tr>
+</tbody>
+</table>
+<p>Note that you don’t need to terminate meta commands with <code>;</code>.</p>
+</section>
+</section>
+<section id="sql-commands" class="level2">
+<h2 class="anchored" data-anchor-id="sql-commands">SQL commands:</h2>
+<section id="the-order-of-sql-clauses" class="level3">
+<h3 class="anchored" data-anchor-id="the-order-of-sql-clauses">The order of SQl clauses:</h3>
+<ul>
+<li>SELECT</li>
+<li>FROM</li>
+<li>WHERE</li>
+<li>ORDER BY</li>
+<li>LIMIT</li>
+</ul>
+</section>
+<section id="logical-operators-order" class="level3">
+<h3 class="anchored" data-anchor-id="logical-operators-order">Logical operators order:</h3>
+<ul>
+<li><code>NOT</code></li>
+<li><code>AND</code></li>
+<li><code>OR</code></li>
+<li><em>In SQL, using () (parentheses) changes the order of evaluation for logical operators. Expressions within parentheses are evaluated first, ensuring the intended logic is applied.</em></li>
+</ul>
+</section>
+<section id="data-types" class="level3">
+<h3 class="anchored" data-anchor-id="data-types">Data types:</h3>
+<ul>
+<li><p>How we convert values from one type to another. In standard SQL, type conversion can be done using the <code>CAST</code> function: <code>CAST(&lt;column&gt; AS &lt;data_type&gt;)</code>. In Postgres, we can also use the double-colon syntax as a shorthand for the above <code>CAST</code> function: <code>&lt;column&gt;::&lt;data_type&gt;</code>.</p></li>
+<li><p><strong>Boolean</strong>, <code>BOOLEAN</code> or <code>BOOL</code></p>
+<ul>
+<li>True: <code>TRUE</code>, <code>t</code>, <code>true</code>, <code>y</code>, <code>yes</code>, <code>YES</code>, <code>Y</code>, <code>T</code>, <code>1(or any other positive integer)</code></li>
+<li>False: <code>FALSE</code>, <code>0</code>, <code>NO</code>, <code>N</code>, <code>F</code></li>
+</ul></li>
+<li><p><strong>Characters</strong></p>
+<ul>
+<li><code>CHAR(n)</code>: a string of exactly <code>n</code> characters padded with spaces.</li>
+<li><code>VARCHAR(n)</code>: a variable set of <code>n</code> characters.</li>
+<li><code>TEXT</code>: Postgres specific type for which there is practically no limit on the number of characters.</li>
+</ul></li>
+<li><p><strong>DateTime</strong>: date and time</p>
+<ul>
+<li><code>DATE</code>: date (YYYY-MM-DD)
+<ul>
+<li><code>CURRENT_DATE</code>: current date</li>
+</ul></li>
+<li><code>TIME</code>: time</li>
+<li><code>TIMESTAMP</code>: date and time</li>
+<li><code>TIMESTAMPTZ</code>: date and time with timezone</li>
+</ul></li>
+<li><p><strong>Binary</strong>: binary data</p></li>
+<li><p><strong>Numbers</strong>:</p></li>
+<li><p>Integers</p></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 28%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Storage Size</th>
+<th>Description</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>smallint</code></td>
+<td>2 bytes</td>
+<td>small-range integer</td>
+<td>-32,768 to +32,767</td>
+</tr>
+<tr class="even">
+<td><code>integer</code></td>
+<td>4 bytes</td>
+<td>typical choice for integer</td>
+<td>-2,147,483,648 to +2,147,483,647</td>
+</tr>
+<tr class="odd">
+<td><code>bigint</code></td>
+<td>8 bytes</td>
+<td>large-range integer</td>
+<td>-9,223,372,036,854,775,808 to +9,223,372,036,854,775,807</td>
+</tr>
+<tr class="even">
+<td><code>serial</code></td>
+<td>4 bytes</td>
+<td>auto-incrementing integer</td>
+<td>1 to 2,147,483,647</td>
+</tr>
+<tr class="odd">
+<td><code>bigserial</code></td>
+<td>8 bytes</td>
+<td>large auto-incrementing integer</td>
+<td>1 to 9,223,372,036,854,775,807</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Floating-point numbers</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 10%">
+<col style="width: 24%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Storage Size</th>
+<th>Description</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>real</code></td>
+<td>4 bytes</td>
+<td>variable-precision, inexact</td>
+<td>at least 6 decimal digits (implementation dependent)</td>
+</tr>
+<tr class="even">
+<td><code>double precision</code></td>
+<td>8 bytes</td>
+<td>variable-precision, inexact</td>
+<td>at least 15 decimal digits (implementation dependent)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Arbitrary precision numbers</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 9%">
+<col style="width: 24%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Storage Size</th>
+<th>Description</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>numeric</code> or <code>decimal</code></td>
+<td>variable</td>
+<td>user-specified precision, exact</td>
+<td>131072 digits before and 16383 digits after the decimal point</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note:With the numeric data type, we can specify the total number of significant digits to store (known as precision) as well as the number of digits in the fractional part (known as scale) by specifying NUMERIC(precision, scale):SELECT CAST(‘183.123456789’ AS NUMERIC(5, 2)); 183.12</em></p>
+<ul>
+<li><strong>Date/time</strong>:
+<ul>
+<li><code>DATE</code>: dates (YYYY-MM-DD)</li>
+<li><code>TIME</code>: the time of day</li>
+<li><code>TIMESTAMP</code>: date + time</li>
+<li><code>TIMESTAMPTZ</code>: date + time + timezone</li>
+<li><code>Intervals</code>: storing intervals of time <code>'3 years 2 months 23 hours 8 minutes 18s'::INTERVAL</code> 1155 days, 23:08:18</li>
+</ul></li>
+</ul>
+</section>
+<section id="nulls" class="level3">
+<h3 class="anchored" data-anchor-id="nulls"><strong>Nulls</strong></h3>
+<p>A null is marker to indicate that the value for a column is unknown, or not entered yet.A null is not equal to 0, or an empty string. In fact, a null is not even equal to another null!</p>
+<p>How different environments show nulls:</p>
+<ul>
+<li>ipython-sql -&gt; None</li>
+<li>psql -&gt; blank space</li>
+<li>pgAdmin -&gt; [null]</li>
+</ul>
+</section>
+<section id="where" class="level3">
+<h3 class="anchored" data-anchor-id="where"><strong>WHERE</strong></h3>
+<table class="table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Condition Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>WHERE column = value</code></td>
+<td>Equals; returns true if the column equals the value.</td>
+</tr>
+<tr class="even">
+<td><code>WHERE column &lt;&gt; value</code></td>
+<td>Not equals; true if the column is not equal to value.</td>
+</tr>
+<tr class="odd">
+<td><code>WHERE column &gt; value</code></td>
+<td>Greater than; true if the column is more than value.</td>
+</tr>
+<tr class="even">
+<td><code>WHERE column &lt; value</code></td>
+<td>Less than; true if the column is less than value.</td>
+</tr>
+<tr class="odd">
+<td><code>WHERE column BETWEEN value1 AND value2</code></td>
+<td>True if the column is within the range of value1 and value2.</td>
+</tr>
+<tr class="even">
+<td><code>WHERE column [NOT] IN (value1, value2, ...)</code></td>
+<td>True if the column is [NOT] equal to any of multiple values.</td>
+</tr>
+<tr class="odd">
+<td><code>WHERE column [NOT] LIKE pattern</code></td>
+<td>True if the column [NOT] matches the SQL pattern.</td>
+</tr>
+<tr class="even">
+<td><code>WHERE column IS [NOT] NULL</code></td>
+<td>True if the column is [NOT] NULL.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that in SQL, strings are enclosed in single quotes, i.e.&nbsp;‘string’.</em></p>
+<p><em>While SQL syntax is case-insensitive, string comparisons in SQL can be case-sensitive depending on the database system and collation settings. For example, in some systems, ‘Lost highway’ will not return any rows if the actual data is ‘Lost Highway’.</em></p>
+</section>
+<section id="like-and-ilike" class="level3">
+<h3 class="anchored" data-anchor-id="like-and-ilike"><strong>LIKE</strong> and <strong>ILIKE</strong></h3>
+<p>Postgres provides us with two wild-cards that we can use with LIKE: - <code>%</code> matches any string of characters. - <code>_</code> matches a single character.</p>
+<ul>
+<li>Pattern matching with <code>LIKE</code> is <code>case sensitive</code>;</li>
+<li>Postgres also provides the <code>ILIKE</code> keyword that has the same functionality as LIKE but is <code>case-insensitive</code>.</li>
+<li>With LIKE or ILIKE, the entire string should match the pattern.</li>
+<li>Using <code>ESCAPE</code> to identify escape character: e.g.&nbsp;<code>WHERE column LIKE '%$%%' ESCAPE '$'</code>: matches strings that contains <code>%</code>.</li>
+</ul>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

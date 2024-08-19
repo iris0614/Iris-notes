@@ -79,6 +79,14 @@ Note that you don't need to terminate meta commands with `;`.
 - WHERE
 - ORDER BY
 - LIMIT
+  
+### Logical operators order:
+
+- `NOT`
+- `AND`
+- `OR`
+- 
+_In SQL, using () (parentheses) changes the order of evaluation for logical operators. Expressions within parentheses are evaluated first, ensuring the intended logic is applied._
 
 ### Data types:
 - How we convert values from one type to another. In standard SQL, type conversion can be done using the `CAST` function: `CAST(<column> AS <data_type>)`. In Postgres, we can also use the double-colon syntax as a shorthand for the above `CAST` function: `<column>::<data_type>`.
@@ -158,3 +166,12 @@ _Note that in SQL, strings are enclosed in single quotes, i.e. 'string'._
 
 _While SQL syntax is case-insensitive, string comparisons in SQL can be case-sensitive depending on the database system and collation settings. For example, in some systems, 'Lost highway' will not return any rows if the actual data is 'Lost Highway'._
 
+### **LIKE** and **ILIKE**
+Postgres provides us with two wild-cards that we can use with LIKE: 
+- `%` matches any string of characters. 
+- `_` matches a single character. 
+
+- Pattern matching with `LIKE` is `case sensitive`; 
+- Postgres also provides the `ILIKE` keyword that has the same functionality as LIKE but is `case-insensitive`.
+- With LIKE or ILIKE, the entire string should match the pattern.
+- Using `ESCAPE` to identify escape character: e.g. `WHERE column LIKE '%$%%' ESCAPE '$'`: matches strings that contains `%`.
