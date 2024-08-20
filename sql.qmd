@@ -73,19 +73,37 @@ title: "SQL"
 Note that you don't need to terminate meta commands with `;`.
 
 ## SQL commands:
-### The order of SQl clauses:
-- SELECT
-- FROM
+### Order of execution/processing in SQl:
+- FROM and JOIN
 - WHERE
+- GROUP BY
+- HAVING
+- SELECT
+- DISTINCT
 - ORDER BY
 - LIMIT
+  
+### Order of SQL clauses in a statement:
+- SELECT
+- FROM
+- JOIN
+- WHERE
+- GROUP BY
+- HAVING
+- ORDER BY
+- LIMIT
+  
+### Order of evaluation for different operators:
+- arithmetic oprators(e.g. `+`, `*`)
+- comparison operators(e.g. `>`, `<=`)
+- logical operators(e.g. `NOT`, `AND`, `OR`)
   
 ### Logical operators order:
 
 - `NOT`
 - `AND`
 - `OR`
-- 
+  
 _In SQL, using () (parentheses) changes the order of evaluation for logical operators. Expressions within parentheses are evaluated first, ensuring the intended logic is applied._
 
 ### Data types:
@@ -139,6 +157,10 @@ _Note:With the numeric data type, we can specify the total number of significant
   - `Intervals`: storing intervals of time
   `'3 years 2 months 23 hours 8 minutes 18s'::INTERVAL` 1155 days, 23:08:18
 
+_`NOW()` and `CURRENT_TIMESTAMP` are equivalent, with the latter being SQL-standard._
+
+_When you use the `NOW()` function in SQL, the timezone of the timestamp it returns depends on the timezone setting of the database server, not your local computer._
+
 ### **Nulls**
   
   A null is marker to indicate that the value for a column is unknown, or not entered yet.A null is not equal to 0, or an empty string. In fact, a null is not even equal to another null!
@@ -175,3 +197,107 @@ Postgres provides us with two wild-cards that we can use with LIKE:
 - Postgres also provides the `ILIKE` keyword that has the same functionality as LIKE but is `case-insensitive`.
 - With LIKE or ILIKE, the entire string should match the pattern.
 - Using `ESCAPE` to identify escape character: e.g. `WHERE column LIKE '%$%%' ESCAPE '$'`: matches strings that contains `%`.
+
+### **IN**
+```sql
+SELECT column1, column2
+FROM table1
+WHERE column1 = value1 OR column1 = value2 OR column1 = value3
+;
+```
+This can be rewritten more succinctly using the `IN` operator:
+```sql
+SELECT column1, column2
+FROM table1
+WHERE column1 IN (value1, value2, value3)
+:
+```
+
+### **BETWEEN**
+Select a range of values, and it can be used for number(`BETWEEN 1 AND 5`), character(`BETWEEN 'e' AND 'm'`) and datetime(`BETWEEN DATE '2021-01-01' AND '2021-11-10'`).
+
+_`BETWEEN` is `inclusive` of both ends of the interval._
+
+### **IS NULL**
+Trying to find `NULL` values using `WHERE column = NULL` fails. This is because a `NULL` value is by defination not known and could be anything, so it's not necessarily equal to another `NULL`. To find `NULL` values in a column, we can use `IS [NOT] NULL`.
+
+### **Column Aliases with AS**
+In SQL, we are not required to use the same column and table names in the schema. 
+
+### **Derived columns**
+Derived columns in SQL are columns taht are the result of doing operations on existing columns of a table.
+```sql
+SELECT title, runtime/60. AS runtime_hours
+FROM movies;
+```
+_if you divide by `60` instead, SQL assumes that the result of this operation should also be an integer(given that the column `runtime` is also of type integer), and will return truncated integer values instead of floats._
+
+_SQL doesn't know what to call the derived column, and by default you will see `?column?` as the column name. We can use an alias to name the new derived column._
+
+_`SELECT` statement is powerful, but not dangerous. Derived columns returned by Postgres are not saved anywhere, nor do they change existing columns._
+
+### **Conditionals with `CASE`**
+It enables us to treat a column differently based on the values in each row.
+```sql
+SELECT 
+  title, 
+  runtime,
+  CASE
+    WHEN runtime > 90 THEN 'long'
+    WHEN runtime BETWEEN 30 AND 90 THEN 'normal'
+    ELSE 'short'
+  END AS duration
+FROM 
+  movies
+;
+```
+### **Functions & operators**
+
+| Operator | Description             |
+|----------|-------------------------|
+| +        | addition                |
+| -        | subtraction             |
+| *        | multiplication          |
+| /        | division                |
+| %        | modulo (remainder)      |
+| ^        | exponentiation          |
+| @        | absolute value          |
+
+| Description                                | Example               |
+|--------------------------------------------|-----------------------|
+| absolute value                             | `abs(-17.4)`          |
+| smallest integer not less than argument    | `ceil(-42.8)`         |
+| exponential                                | `exp(1.0)`            |
+| largest integer not greater than argument  | `floor(-42.8)`        |
+| natural logarithm                          | `ln(2.0)`             |
+| logarithm to base b                        | `log(2.0, 64.0)`      |
+| "π" constant                               | `pi()`                |
+| a raised to the power of b                 | `power(9.0, 3.0)`     |
+| round to s decimal places                  | `round(42.4382, 2)`   |
+| square root                                | `sqrt(2.0)`           |
+
+_`ROUND()` function only works with the  `NUMERIC` (or equivalently `DECIMAL`) data type._
+
+| Function                                      | Description                                  |
+|-----------------------------------------------|----------------------------------------------|
+| `string || string`                            | String concatenation                         |
+| `string || non-string` or `non-string || string` | String concatenation with one non-string input |
+| `char_length(string)` or `character_length(string)` | Number of characters in string               |
+| `lower(string)`                               | Convert string to lower case                 |
+| `position(substring in string)`               | Location of specified substring              |
+| `substring(string)`                           | Extract substring                            |
+| `upper(string)`                               | Convert string to upper case                 |
+| `length(string)`                              | Number of characters in string               |
+
+```sql
+SELECT
+  UPPER(title),
+  SUBSTRING(title FROM 1 FOR 3) AS "First 3 characters",
+  SUBSTRING(title, LENGTH(title) - 3, 3) AS "LAST 3 characters"
+FROM
+  movies
+;
+```
+
+### **Nulls**
+`NULLIF(value1, value2)` returns null if `value1` and `value2` are equal. This is helpful for replacing known values with nulls, or prevent, for example, division by zero. 

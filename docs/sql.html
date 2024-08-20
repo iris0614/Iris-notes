@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -116,12 +150,22 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#sql-commands" id="toc-sql-commands" class="nav-link" data-scroll-target="#sql-commands">SQL commands:</a>
   <ul class="collapse">
-  <li><a href="#the-order-of-sql-clauses" id="toc-the-order-of-sql-clauses" class="nav-link" data-scroll-target="#the-order-of-sql-clauses">The order of SQl clauses:</a></li>
+  <li><a href="#order-of-executionprocessing-in-sql" id="toc-order-of-executionprocessing-in-sql" class="nav-link" data-scroll-target="#order-of-executionprocessing-in-sql">Order of execution/processing in SQl:</a></li>
+  <li><a href="#order-of-sql-clauses-in-a-statement" id="toc-order-of-sql-clauses-in-a-statement" class="nav-link" data-scroll-target="#order-of-sql-clauses-in-a-statement">Order of SQL clauses in a statement:</a></li>
+  <li><a href="#order-of-evaluation-for-different-operators" id="toc-order-of-evaluation-for-different-operators" class="nav-link" data-scroll-target="#order-of-evaluation-for-different-operators">Order of evaluation for different operators:</a></li>
   <li><a href="#logical-operators-order" id="toc-logical-operators-order" class="nav-link" data-scroll-target="#logical-operators-order">Logical operators order:</a></li>
   <li><a href="#data-types" id="toc-data-types" class="nav-link" data-scroll-target="#data-types">Data types:</a></li>
   <li><a href="#nulls" id="toc-nulls" class="nav-link" data-scroll-target="#nulls"><strong>Nulls</strong></a></li>
   <li><a href="#where" id="toc-where" class="nav-link" data-scroll-target="#where"><strong>WHERE</strong></a></li>
   <li><a href="#like-and-ilike" id="toc-like-and-ilike" class="nav-link" data-scroll-target="#like-and-ilike"><strong>LIKE</strong> and <strong>ILIKE</strong></a></li>
+  <li><a href="#in" id="toc-in" class="nav-link" data-scroll-target="#in"><strong>IN</strong></a></li>
+  <li><a href="#between" id="toc-between" class="nav-link" data-scroll-target="#between"><strong>BETWEEN</strong></a></li>
+  <li><a href="#is-null" id="toc-is-null" class="nav-link" data-scroll-target="#is-null"><strong>IS NULL</strong></a></li>
+  <li><a href="#column-aliases-with-as" id="toc-column-aliases-with-as" class="nav-link" data-scroll-target="#column-aliases-with-as"><strong>Column Aliases with AS</strong></a></li>
+  <li><a href="#derived-columns" id="toc-derived-columns" class="nav-link" data-scroll-target="#derived-columns"><strong>Derived columns</strong></a></li>
+  <li><a href="#conditionals-with-case" id="toc-conditionals-with-case" class="nav-link" data-scroll-target="#conditionals-with-case"><strong>Conditionals with <code>CASE</code></strong></a></li>
+  <li><a href="#functions-operators" id="toc-functions-operators" class="nav-link" data-scroll-target="#functions-operators"><strong>Functions &amp; operators</strong></a></li>
+  <li><a href="#nulls-1" id="toc-nulls-1" class="nav-link" data-scroll-target="#nulls-1"><strong>Nulls</strong></a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -286,14 +330,38 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sql-commands" class="level2">
 <h2 class="anchored" data-anchor-id="sql-commands">SQL commands:</h2>
-<section id="the-order-of-sql-clauses" class="level3">
-<h3 class="anchored" data-anchor-id="the-order-of-sql-clauses">The order of SQl clauses:</h3>
+<section id="order-of-executionprocessing-in-sql" class="level3">
+<h3 class="anchored" data-anchor-id="order-of-executionprocessing-in-sql">Order of execution/processing in SQl:</h3>
+<ul>
+<li>FROM and JOIN</li>
+<li>WHERE</li>
+<li>GROUP BY</li>
+<li>HAVING</li>
+<li>SELECT</li>
+<li>DISTINCT</li>
+<li>ORDER BY</li>
+<li>LIMIT</li>
+</ul>
+</section>
+<section id="order-of-sql-clauses-in-a-statement" class="level3">
+<h3 class="anchored" data-anchor-id="order-of-sql-clauses-in-a-statement">Order of SQL clauses in a statement:</h3>
 <ul>
 <li>SELECT</li>
 <li>FROM</li>
+<li>JOIN</li>
 <li>WHERE</li>
+<li>GROUP BY</li>
+<li>HAVING</li>
 <li>ORDER BY</li>
 <li>LIMIT</li>
+</ul>
+</section>
+<section id="order-of-evaluation-for-different-operators" class="level3">
+<h3 class="anchored" data-anchor-id="order-of-evaluation-for-different-operators">Order of evaluation for different operators:</h3>
+<ul>
+<li>arithmetic oprators(e.g.&nbsp;<code>+</code>, <code>*</code>)</li>
+<li>comparison operators(e.g.&nbsp;<code>&gt;</code>, <code>&lt;=</code>)</li>
+<li>logical operators(e.g.&nbsp;<code>NOT</code>, <code>AND</code>, <code>OR</code>)</li>
 </ul>
 </section>
 <section id="logical-operators-order" class="level3">
@@ -302,8 +370,8 @@ ul.task-list li input[type="checkbox"] {
 <li><code>NOT</code></li>
 <li><code>AND</code></li>
 <li><code>OR</code></li>
-<li><em>In SQL, using () (parentheses) changes the order of evaluation for logical operators. Expressions within parentheses are evaluated first, ensuring the intended logic is applied.</em></li>
 </ul>
+<p><em>In SQL, using () (parentheses) changes the order of evaluation for logical operators. Expressions within parentheses are evaluated first, ensuring the intended logic is applied.</em></p>
 </section>
 <section id="data-types" class="level3">
 <h3 class="anchored" data-anchor-id="data-types">Data types:</h3>
@@ -453,6 +521,8 @@ ul.task-list li input[type="checkbox"] {
 <li><code>Intervals</code>: storing intervals of time <code>'3 years 2 months 23 hours 8 minutes 18s'::INTERVAL</code> 1155 days, 23:08:18</li>
 </ul></li>
 </ul>
+<p><em><code>NOW()</code> and <code>CURRENT_TIMESTAMP</code> are equivalent, with the latter being SQL-standard.</em></p>
+<p><em>When you use the <code>NOW()</code> function in SQL, the timezone of the timestamp it returns depends on the timezone setting of the database server, not your local computer.</em></p>
 </section>
 <section id="nulls" class="level3">
 <h3 class="anchored" data-anchor-id="nulls"><strong>Nulls</strong></h3>
@@ -524,6 +594,204 @@ ul.task-list li input[type="checkbox"] {
 <li>With LIKE or ILIKE, the entire string should match the pattern.</li>
 <li>Using <code>ESCAPE</code> to identify escape character: e.g.&nbsp;<code>WHERE column LIKE '%$%%' ESCAPE '$'</code>: matches strings that contains <code>%</code>.</li>
 </ul>
+</section>
+<section id="in" class="level3">
+<h3 class="anchored" data-anchor-id="in"><strong>IN</strong></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column1, column2</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> table1</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> column1 <span class="op">=</span> value1 <span class="kw">OR</span> column1 <span class="op">=</span> value2 <span class="kw">OR</span> column1 <span class="op">=</span> value3</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This can be rewritten more succinctly using the <code>IN</code> operator:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column1, column2</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> table1</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> column1 <span class="kw">IN</span> (value1, value2, value3)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="between" class="level3">
+<h3 class="anchored" data-anchor-id="between"><strong>BETWEEN</strong></h3>
+<p>Select a range of values, and it can be used for number(<code>BETWEEN 1 AND 5</code>), character(<code>BETWEEN 'e' AND 'm'</code>) and datetime(<code>BETWEEN DATE '2021-01-01' AND '2021-11-10'</code>).</p>
+<p><em><code>BETWEEN</code> is <code>inclusive</code> of both ends of the interval.</em></p>
+</section>
+<section id="is-null" class="level3">
+<h3 class="anchored" data-anchor-id="is-null"><strong>IS NULL</strong></h3>
+<p>Trying to find <code>NULL</code> values using <code>WHERE column = NULL</code> fails. This is because a <code>NULL</code> value is by defination not known and could be anything, so it’s not necessarily equal to another <code>NULL</code>. To find <code>NULL</code> values in a column, we can use <code>IS [NOT] NULL</code>.</p>
+</section>
+<section id="column-aliases-with-as" class="level3">
+<h3 class="anchored" data-anchor-id="column-aliases-with-as"><strong>Column Aliases with AS</strong></h3>
+<p>In SQL, we are not required to use the same column and table names in the schema.</p>
+</section>
+<section id="derived-columns" class="level3">
+<h3 class="anchored" data-anchor-id="derived-columns"><strong>Derived columns</strong></h3>
+<p>Derived columns in SQL are columns taht are the result of doing operations on existing columns of a table.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> title, runtime<span class="op">/</span><span class="fl">60.</span> <span class="kw">AS</span> runtime_hours</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> movies;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>if you divide by <code>60</code> instead, SQL assumes that the result of this operation should also be an integer(given that the column <code>runtime</code> is also of type integer), and will return truncated integer values instead of floats.</em></p>
+<p><em>SQL doesn’t know what to call the derived column, and by default you will see <code>?column?</code> as the column name. We can use an alias to name the new derived column.</em></p>
+<p><em><code>SELECT</code> statement is powerful, but not dangerous. Derived columns returned by Postgres are not saved anywhere, nor do they change existing columns.</em></p>
+</section>
+<section id="conditionals-with-case" class="level3">
+<h3 class="anchored" data-anchor-id="conditionals-with-case"><strong>Conditionals with <code>CASE</code></strong></h3>
+<p>It enables us to treat a column differently based on the values in each row.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  title, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  runtime,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">CASE</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> runtime <span class="op">&gt;</span> <span class="dv">90</span> <span class="cf">THEN</span> <span class="st">'long'</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> runtime <span class="kw">BETWEEN</span> <span class="dv">30</span> <span class="kw">AND</span> <span class="dv">90</span> <span class="cf">THEN</span> <span class="st">'normal'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span> <span class="st">'short'</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">END</span> <span class="kw">AS</span> duration</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  movies</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="functions-operators" class="level3">
+<h3 class="anchored" data-anchor-id="functions-operators"><strong>Functions &amp; operators</strong></h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>+</td>
+<td>addition</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>subtraction</td>
+</tr>
+<tr class="odd">
+<td>*</td>
+<td>multiplication</td>
+</tr>
+<tr class="even">
+<td>/</td>
+<td>division</td>
+</tr>
+<tr class="odd">
+<td>%</td>
+<td>modulo (remainder)</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>exponentiation</td>
+</tr>
+<tr class="odd">
+<td>@</td>
+<td>absolute value</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>absolute value</td>
+<td><code>abs(-17.4)</code></td>
+</tr>
+<tr class="even">
+<td>smallest integer not less than argument</td>
+<td><code>ceil(-42.8)</code></td>
+</tr>
+<tr class="odd">
+<td>exponential</td>
+<td><code>exp(1.0)</code></td>
+</tr>
+<tr class="even">
+<td>largest integer not greater than argument</td>
+<td><code>floor(-42.8)</code></td>
+</tr>
+<tr class="odd">
+<td>natural logarithm</td>
+<td><code>ln(2.0)</code></td>
+</tr>
+<tr class="even">
+<td>logarithm to base b</td>
+<td><code>log(2.0, 64.0)</code></td>
+</tr>
+<tr class="odd">
+<td>“π” constant</td>
+<td><code>pi()</code></td>
+</tr>
+<tr class="even">
+<td>a raised to the power of b</td>
+<td><code>power(9.0, 3.0)</code></td>
+</tr>
+<tr class="odd">
+<td>round to s decimal places</td>
+<td><code>round(42.4382, 2)</code></td>
+</tr>
+<tr class="even">
+<td>square root</td>
+<td><code>sqrt(2.0)</code></td>
+</tr>
+</tbody>
+</table>
+<p><em><code>ROUND()</code> function only works with the <code>NUMERIC</code> (or equivalently <code>DECIMAL</code>) data type.</em></p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 49%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>string || string</code></td>
+<td>String concatenation</td>
+</tr>
+<tr class="even">
+<td><code>string || non-string</code> or <code>non-string || string</code></td>
+<td>String concatenation with one non-string input</td>
+</tr>
+<tr class="odd">
+<td><code>char_length(string)</code> or <code>character_length(string)</code></td>
+<td>Number of characters in string</td>
+</tr>
+<tr class="even">
+<td><code>lower(string)</code></td>
+<td>Convert string to lower case</td>
+</tr>
+<tr class="odd">
+<td><code>position(substring in string)</code></td>
+<td>Location of specified substring</td>
+</tr>
+<tr class="even">
+<td><code>substring(string)</code></td>
+<td>Extract substring</td>
+</tr>
+<tr class="odd">
+<td><code>upper(string)</code></td>
+<td>Convert string to upper case</td>
+</tr>
+<tr class="even">
+<td><code>length(string)</code></td>
+<td>Number of characters in string</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">UPPER</span>(title),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  SUBSTRING(title <span class="kw">FROM</span> <span class="dv">1</span> <span class="cf">FOR</span> <span class="dv">3</span>) <span class="kw">AS</span> <span class="ot">"First 3 characters"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  SUBSTRING(title, <span class="fu">LENGTH</span>(title) <span class="op">-</span> <span class="dv">3</span>, <span class="dv">3</span>) <span class="kw">AS</span> <span class="ot">"LAST 3 characters"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  movies</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="nulls-1" class="level3">
+<h3 class="anchored" data-anchor-id="nulls-1"><strong>Nulls</strong></h3>
+<p><code>NULLIF(value1, value2)</code> returns null if <code>value1</code> and <code>value2</code> are equal. This is helpful for replacing known values with nulls, or prevent, for example, division by zero.</p>
 
 
 </section>
